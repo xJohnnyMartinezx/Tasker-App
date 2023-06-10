@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+    <head>
+    <meta charset="UTF-8">
+    <title>Create a Post</title>
+
+</head>
+    <body>
+
+    <h1> These are all the tasks</h1>
+
+    <th:block>
+        <ul th:each="task : ${taskList}">
+            <li th:text="'Title: ' + ${task.taskTitle}" />
+            <li th:text="'Description: ' + ${task.taskDescription}" />
+        </ul>
+
+    </th:block>
+
+</body>
+</html>

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+    <head>
+    <meta charset="UTF-8">
+    <title>Create a Post</title>
+
+</head>
+    <body>
+
+    <form th:action="@{/task/create}" th:method="post" th:object="${task}">
+        Title:
+        <input th:field="*{taskTitle}" />
+        <br />
+        Description:
+        <input th:field="*{taskDescription}" />
+        <br />
+        <input type="submit" />
+    </form>
+
+
+
+
+    </body>
+</html>
