@@ -1,6 +1,5 @@
 package com.codeup.tasker.models;
 
-
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -13,31 +12,33 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.Instant;
+import java.util.List;
+
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
 @Entity
-@Table(name = "tasks")
+@Table(name = "groups")
 @EntityListeners(AuditingEntityListener.class)
-public class Task {
+public class Group {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private long groupId;
 
-    @Column(length = 60, nullable = false)
-    private String taskTitle;
+    @Column(nullable = false)
+    private String groupName;
 
     @Column(columnDefinition = "TEXT", nullable = false)
-    private String taskDescription;
+    private String groupDescription;
 
     @CreatedBy
-    private String createdBy;
+    private String groupCreatedBy;
 
     @CreatedDate
-    private Instant createdDate;
+    private Instant groupCreatedDate;
 
     @LastModifiedBy
     private String lastModifiedBy;
@@ -45,9 +46,10 @@ public class Task {
     @LastModifiedDate
     private Instant lastModifiedDate;
 
-    @ManyToOne
-    @JoinColumn (name = "user_id")
-    private User user;
+    @ManyToMany(mappedBy = "groups")
+    private List<User> users;
+
+
 
 
 
