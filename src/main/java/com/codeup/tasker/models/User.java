@@ -10,7 +10,6 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-
 import java.time.Instant;
 import java.util.List;
 
@@ -62,11 +61,11 @@ public class User {
     private List<UserRoles> roles;
 
     @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "user_groups",
+    @JoinTable(name = "user_organizations",
             joinColumns = {@JoinColumn(name = "user_id")},
-            inverseJoinColumns = {@JoinColumn(name = "group_id")}
+            inverseJoinColumns = {@JoinColumn(name = "organization_id")}
     )
-    private List<Group> groups;
+    private List<Organization> organizations;
 
 
 }

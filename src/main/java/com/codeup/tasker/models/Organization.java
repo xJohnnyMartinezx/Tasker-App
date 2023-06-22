@@ -10,35 +10,33 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-
 import java.time.Instant;
 import java.util.List;
-
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
 @Entity
-@Table(name = "groups")
+@Table(name = "organizations")
 @EntityListeners(AuditingEntityListener.class)
-public class Group {
+public class Organization {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long groupId;
+    private long organizationId;
 
     @Column(nullable = false)
-    private String groupName;
+    private String organizationName;
 
     @Column(columnDefinition = "TEXT", nullable = false)
-    private String groupDescription;
+    private String organizationDescription;
 
     @CreatedBy
-    private String groupCreatedBy;
+    private String organizationCreatedBy;
 
     @CreatedDate
-    private Instant groupCreatedDate;
+    private Instant organizationCreatedDate;
 
     @LastModifiedBy
     private String lastModifiedBy;
@@ -46,11 +44,7 @@ public class Group {
     @LastModifiedDate
     private Instant lastModifiedDate;
 
-    @ManyToMany(mappedBy = "groups")
+    @ManyToMany(mappedBy = "organizations")
     private List<User> users;
-
-
-
-
 
 }
