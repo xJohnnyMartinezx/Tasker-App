@@ -11,6 +11,7 @@ import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @AllArgsConstructor
@@ -20,7 +21,7 @@ import java.util.List;
 @Entity
 @Table(name = "users")
 @EntityListeners(AuditingEntityListener.class)
-public class User {
+public class User extends AuditableBase{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,6 +30,7 @@ public class User {
     @Column(length = 100, nullable = false)
     private String fullName;
 
+    @CreatedBy
     @Column(length = 60, nullable = false)
     private String username;
 
@@ -37,18 +39,6 @@ public class User {
 
     @Column(nullable = false)
     private String password;
-
-    @CreatedBy
-    private String createdBy;
-
-    @CreatedDate
-    private Instant createdDate;
-
-    @LastModifiedBy
-    private String lastModifiedBy;
-
-    @LastModifiedDate
-    private Instant lastModifiedDate;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
     private List<Task> tasks;

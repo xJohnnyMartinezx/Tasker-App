@@ -33,6 +33,9 @@ public class Task {
     @Column(columnDefinition = "TEXT", nullable = false)
     private String taskDescription;
 
+    @Column
+    boolean isComplete;
+
     @CreatedBy
     private String createdBy;
 
