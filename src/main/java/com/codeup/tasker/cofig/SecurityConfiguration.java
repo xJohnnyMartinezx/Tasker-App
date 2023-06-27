@@ -1,6 +1,6 @@
 package com.codeup.tasker.cofig;
 
-import com.codeup.springblogv2.Services.UserDetailsLoader;
+import com.codeup.tasker.services.UserDetailsLoader;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -42,7 +42,7 @@ public class SecurityConfiguration {
                         .requestMatchers("/posts/create-form", "/posts/*/edit", "/weather-submit").authenticated()
                         /* Pages that do not require authentication
                          * anyone can visit the home page, register, login, and view ads */
-                        .requestMatchers("/", "/posts", "/posts/*", "/user/sign-up", "/login").permitAll()
+                        .requestMatchers("/", "/register", "/login").permitAll()
                         // allow loading of static resources
                         .requestMatchers("/css/**", "/js/**", "/img/**").permitAll()
                 )

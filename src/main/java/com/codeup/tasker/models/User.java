@@ -6,12 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.data.annotation.CreatedBy;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedBy;
-import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-import java.time.Instant;
-import java.time.LocalDateTime;
 import java.util.List;
 
 @AllArgsConstructor
@@ -30,7 +25,6 @@ public class User extends AuditableBase{
     @Column(length = 100, nullable = false)
     private String fullName;
 
-    @CreatedBy
     @Column(length = 60, nullable = false)
     private String username;
 
@@ -58,4 +52,11 @@ public class User extends AuditableBase{
     private List<Organization> organizations;
 
 
+    public User(User copy) {
+        this.id = copy.id;
+        this.fullName = copy.fullName;
+        this.username = copy.username;
+        this.email = copy.email;
+        this.password = copy.password;
+    }
 }
