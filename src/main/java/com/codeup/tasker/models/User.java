@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import java.util.List;
@@ -15,6 +17,8 @@ import java.util.List;
 @Setter
 @Entity
 @Table(name = "users")
+@DynamicUpdate
+@DynamicInsert
 @EntityListeners(AuditingEntityListener.class)
 public class User extends AuditableBase{
 

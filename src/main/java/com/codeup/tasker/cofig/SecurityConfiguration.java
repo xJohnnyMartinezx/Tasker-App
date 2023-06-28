@@ -39,15 +39,15 @@ public class SecurityConfiguration {
         http.authorizeHttpRequests((requests) -> requests
                         /* Pages that require authentication
                          * only authenticated users can create and edit ads */
-                        .requestMatchers("/posts/create-form", "/posts/*/edit", "/weather-submit").authenticated()
+                        .requestMatchers( "/task/create", "/tasks/{id}/edit").authenticated()
                         /* Pages that do not require authentication
                          * anyone can visit the home page, register, login, and view ads */
-                        .requestMatchers("/", "/register", "/login").permitAll()
+                        .requestMatchers("/", "/register", "/login", "/tasks", "/tasks/{id}").permitAll()
                         // allow loading of static resources
                         .requestMatchers("/css/**", "/js/**", "/img/**").permitAll()
                 )
                 /* Login configuration */
-                .formLogin((login) -> login.loginPage("/login").defaultSuccessUrl("/posts"))
+                .formLogin((login) -> login.loginPage("/login").defaultSuccessUrl("/tasks"))
                 /* Logout configuration */
                 .logout((logout) -> logout.logoutSuccessUrl("/login?logout")).httpBasic(withDefaults());
         return http.build();

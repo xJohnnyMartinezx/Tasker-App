@@ -8,10 +8,12 @@
     <body>
 
     <h1> These are all the tasks</h1>
+    <!--Syntax to set the ID Path Variable in the action-->
+<!--    <form th:action="@{/posts/{id}/edit (id = ${post.id})}"></form>-->
 
     <th:block>
         <ul th:each="task : ${taskList}">
-            <li th:text="'Title: ' + ${task.taskTitle}" />
+            <a th:text="'Title: ' + ${task.taskTitle}" th:href="@{/tasks/{id} (id = ${task.id})}"/>
             <li th:text="'Description: ' + ${task.taskDescription}" />
         </ul>
 

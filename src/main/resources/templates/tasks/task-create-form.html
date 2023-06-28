@@ -7,7 +7,7 @@
 </head>
     <body>
 
-    <form th:action="@{/task/create}" th:method="post" th:object="${task}">
+    <form th:action="@{/tasks/create}" th:method="post" th:object="${task}">
         Title:
         <input th:field="*{taskTitle}" />
         <br />

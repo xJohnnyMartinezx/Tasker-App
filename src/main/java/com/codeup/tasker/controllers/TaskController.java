@@ -4,12 +4,10 @@ import com.codeup.tasker.models.Task;
 import com.codeup.tasker.models.User;
 import com.codeup.tasker.repos.TasksRepo;
 import com.codeup.tasker.repos.UserRepo;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -35,19 +33,39 @@ public class TaskController {
         return "/tasks/index";
     }
 
-    @GetMapping("/task/create")
+    @GetMapping("/tasks/{id}")
+    public String viewIndividualTask(@PathVariable Long id, Model model){
+        model.addAttribute("individualTask", taskDao.findById(id).get());
+        return "/tasks/view-task-by-id";
+    }
+
+    @GetMapping("/tasks/create")
     public String createTaskForm(Model model){
         model.addAttribute("task", new Task());
         return "/tasks/task-create-form";
     }
 
-    @PostMapping("/task/create")
+    @PostMapping("/tasks/create")
     public String createTaskSubmit(@ModelAttribute Task task){
-        User user = userDao.findById(1L).get();
-        task.setUser(user);
+        User loggedInUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        task.setUser(loggedInUser);
         taskDao.save(task);
 
         return "redirect:/tasks";
+    }
+
+    @GetMapping("/tasks/{id}/edit")
+    public String editTaskForm(@PathVariable Long id, Model model){
+        model.addAttribute("editTask", taskDao.findById(id).get());
+        return "tasks/tasks-edit-form";
+    }
+
+    @PostMapping("/tasks/{id}/edit")
+    public String editTaskSubmit(@ModelAttribute Task task){
+        User loggedInUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        task.setUser(loggedInUser);
+        taskDao.save(task);
+        return "redirect: /tasks/{id}";
     }
 
 

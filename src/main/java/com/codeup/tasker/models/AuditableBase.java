@@ -1,15 +1,14 @@
 package com.codeup.tasker.models;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.EntityListeners;
-import jakarta.persistence.MappedSuperclass;
+import jakarta.persistence.*;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import java.sql.Timestamp;
+import java.util.Calendar;
+
 
 @MappedSuperclass
 @EntityListeners(value = {AuditingEntityListener.class})
@@ -21,7 +20,10 @@ public abstract class AuditableBase{
 
     @CreatedDate
     @Column(name = "created_date", updatable = false)
-    private Timestamp createdDate;
+//    @Temporal inserts the correct current time and date in DB. (using jakarta.persistence)
+//    Other Date/Time classes were inserting the incorrect local time.
+    @Temporal(TemporalType.TIMESTAMP)
+    private Calendar createdDate;
 
     @LastModifiedBy
     @Column(name = "modified_by")
@@ -29,7 +31,8 @@ public abstract class AuditableBase{
 
     @LastModifiedDate
     @Column(name = "modified_date")
-    private Timestamp modifiedDate;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Calendar modifiedDate;
 
 
 

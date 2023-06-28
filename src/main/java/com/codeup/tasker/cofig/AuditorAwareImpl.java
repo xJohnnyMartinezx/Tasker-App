@@ -22,13 +22,13 @@ public class AuditorAwareImpl implements AuditorAware<String> {
             if (authentication == null || !authentication.isAuthenticated()) {
                 return null;
             } else {
-               String loggedInUser =  SecurityContextHolder.getContext().getAuthentication().getName();
+                String username = authentication.getName();
 
-               return Optional.of(loggedInUser);
+
+                return Optional.of(username);
             }
 
 
-//        return (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
     }
 }

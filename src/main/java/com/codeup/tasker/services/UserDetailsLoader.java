@@ -3,6 +3,7 @@ package com.codeup.tasker.services;
 import com.codeup.tasker.models.User;
 import com.codeup.tasker.models.UserWithRoles;
 import com.codeup.tasker.repos.UserRepo;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
