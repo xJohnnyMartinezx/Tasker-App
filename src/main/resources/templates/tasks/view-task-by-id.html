@@ -10,6 +10,9 @@
         <ul th:object="${individualTask} ">
             <li th:text="'Title: ' + ${individualTask.taskTitle}"/>
             <li th:text="'Description: ' + ${individualTask.taskDescription}" />
+            <form th:action="@{/tasks/{id}/edit (id = ${individualTask.id})}">
+            <button th:type="submit">Edit</button>
+            </form>
         </ul>
 
 

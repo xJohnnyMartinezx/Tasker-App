@@ -7,5 +7,19 @@
 </head>
     <body>
 
+    <form th:action="@{'/tasks/' + ${editTask.getId()} + '/edit'}" th:method="POST" th:object="${editTask}">
+
+        Title:
+        <input th:field="*{taskTitle}">
+        <br/>
+        Post Contents:
+        <textarea th:field="*{taskDescription}" rows="10" cols="20">
+        </textarea>
+        <button type="submit">Submit Edits</button>
+        <!--        <a th:href="@{posts/show.html}">-->
+        <button>Cancel</button>
+        <!--        </a>-->
+    </form>
+
 </body>
 </html>
