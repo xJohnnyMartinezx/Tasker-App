@@ -2,10 +2,12 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
     <head>
     <meta charset="UTF-8">
-    <title>Create a Post</title>
+    <title>Tasks Index</title>
+        <th:block th:insert="~{partials/nav.html :: bootstrap-cdn-link}"></th:block>
 
 </head>
     <body>
+    <th:block th:replace="~{partials/nav.html :: bs-navbar}"></th:block>
 
     <h1> These are all the tasks</h1>
     <!--Syntax to set the ID Path Variable in the action-->
@@ -19,5 +21,7 @@
 
     </th:block>
 
+
+<th:block th:insert="~{partials/nav.html :: bootstrap-script}"></th:block>
 </body>
 </html>

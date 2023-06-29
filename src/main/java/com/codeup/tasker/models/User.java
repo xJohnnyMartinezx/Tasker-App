@@ -8,7 +8,11 @@ import lombok.Setter;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.LastModifiedBy;
+import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import java.util.Calendar;
 import java.util.List;
 
 @AllArgsConstructor
@@ -20,7 +24,7 @@ import java.util.List;
 @DynamicUpdate
 @DynamicInsert
 @EntityListeners(AuditingEntityListener.class)
-public class User extends AuditableBase{
+public class User{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -54,6 +58,15 @@ public class User extends AuditableBase{
             inverseJoinColumns = {@JoinColumn(name = "organization_id")}
     )
     private List<Organization> organizations;
+
+    @LastModifiedBy
+    @Column(name = "modified_by")
+    private String modifiedBy;
+
+    @LastModifiedDate
+    @Column(name = "modified_date")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Calendar modifiedDate;
 
 
     public User(User copy) {

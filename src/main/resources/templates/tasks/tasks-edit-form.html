@@ -2,24 +2,32 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
     <head>
     <meta charset="UTF-8">
-    <title>Create a Post</title>
+    <title>Edit Task</title>
+        <th:block th:insert="~{partials/nav.html :: bootstrap-cdn-link}"></th:block>
 
-</head>
+
+    </head>
     <body>
+    <th:block th:replace="~{partials/nav.html :: bs-navbar}"></th:block>
+
 
     <form th:action="@{'/tasks/' + ${editTask.getId()} + '/edit'}" th:method="POST" th:object="${editTask}">
 
-        Title:
-        <input th:field="*{taskTitle}">
+
+        <label for="taskTitle">Tile:</label>
+        <input id="taskTitle" th:field="*{taskTitle}">
         <br/>
-        Post Contents:
-        <textarea th:field="*{taskDescription}" rows="10" cols="20">
+        <label for="taskDescription">Description</label>
+        <textarea id="taskDescription" th:field="*{taskDescription}" rows="10" cols="20">
         </textarea>
+        <label for="taskDate">Due Date</label>
+        <input id="taskDate" type="date" value="2017-06-01" />
         <button type="submit">Submit Edits</button>
         <!--        <a th:href="@{posts/show.html}">-->
         <button>Cancel</button>
         <!--        </a>-->
     </form>
 
-</body>
+    <th:block th:insert="~{partials/nav.html :: bootstrap-script}"></th:block>
+    </body>
 </html>

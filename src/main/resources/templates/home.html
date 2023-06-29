@@ -2,12 +2,17 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
     <head>
     <meta charset="UTF-8">
-    <title>Create a Post</title>
+    <title>Home</title>
+        <th:block th:insert="~{partials/nav.html :: bootstrap-cdn-link}"></th:block>
 
-</head>
+
+    </head>
     <body>
+    <th:block th:replace="~{partials/nav.html :: bs-navbar}"></th:block>
+
 
     <h1>This is the home page</h1>
 
-</body>
+    <th:block th:insert="~{partials/nav.html :: bootstrap-script}"></th:block>
+    </body>
 </html>

@@ -65,7 +65,7 @@ public class TaskController {
         User loggedInUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         task.setUser(loggedInUser);
         taskDao.save(task);
-        return "redirect: /tasks/{id}";
+        return "redirect:/tasks";
     }
 
 

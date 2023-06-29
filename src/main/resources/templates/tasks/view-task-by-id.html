@@ -2,10 +2,14 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
     <head>
     <meta charset="UTF-8">
-    <title>Create a Post</title>
+    <title>View a Task</title>
+        <th:block th:insert="~{partials/nav.html :: bootstrap-cdn-link}"></th:block>
 
-</head>
+
+    </head>
     <body>
+    <th:block th:replace="~{partials/nav.html :: bs-navbar}"></th:block>
+
     <th:block>
         <ul th:object="${individualTask} ">
             <li th:text="'Title: ' + ${individualTask.taskTitle}"/>
@@ -14,7 +18,8 @@
             <button th:type="submit">Edit</button>
             </form>
         </ul>
+    </th:block>
 
-
+        <th:block th:insert="~{partials/nav.html :: bootstrap-script}"></th:block>
 </body>
 </html>

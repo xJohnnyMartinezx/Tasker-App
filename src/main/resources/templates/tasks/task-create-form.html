@@ -3,22 +3,31 @@
     <head>
     <meta charset="UTF-8">
     <title>Create a Post</title>
+        <th:block th:insert="~{partials/nav.html :: bootstrap-cdn-link}"></th:block>
 
-</head>
+
+    </head>
     <body>
+    <th:block th:replace="~{partials/nav.html :: bs-navbar}"></th:block>
+
 
     <form th:action="@{/tasks/create}" th:method="post" th:object="${task}">
-        Title:
-        <input th:field="*{taskTitle}" />
-        <br />
-        Description:
-        <input th:field="*{taskDescription}" />
-        <br />
-        <input type="submit" />
+        <label for="taskTitle">Tile:</label>
+        <input id="taskTitle" th:field="*{taskTitle}">
+        <br/>
+        <label for="taskDescription">Description</label>
+        <textarea id="taskDescription" th:field="*{taskDescription}" rows="10" cols="20">
+        </textarea>
+        <label for="taskDate">Due Date</label>
+        <input id="taskDate" type="date" value="2017-06-01" />
+        <button type="submit">Submit New Task</button>
+                <a th:href="@{tasks/index.html}">
+        <button>Cancel</button>
+                </a>
     </form>
 
 
 
-
+    <th:block th:insert="~{partials/nav.html :: bootstrap-script}"></th:block>
     </body>
 </html>

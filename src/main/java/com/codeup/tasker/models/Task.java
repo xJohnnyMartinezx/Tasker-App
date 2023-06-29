@@ -34,6 +34,9 @@ public class Task extends AuditableBase {
     @Column(columnDefinition = "TEXT", nullable = false)
     private String taskDescription;
 
+    @Column(length = 50, nullable = false)
+    private String taskDueDate;
+
     @Column
     boolean isComplete;
 

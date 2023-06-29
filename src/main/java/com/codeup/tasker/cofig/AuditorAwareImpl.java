@@ -23,6 +23,7 @@ public class AuditorAwareImpl implements AuditorAware<String> {
                 return null;
             } else {
                 String username = authentication.getName();
+                System.out.println("line 26: " + username);
 
 
                 return Optional.of(username);
