@@ -21,7 +21,7 @@
         <textarea id="taskDescription" th:field="*{taskDescription}" rows="10" cols="20">
         </textarea>
         <label for="taskDate">Due Date</label>
-        <input id="taskDate" type="date" value="2017-06-01" />
+        <input id="taskDate" type="date" th:field="*{taskDueDate}"/>
         <button type="submit">Submit Edits</button>
         <!--        <a th:href="@{posts/show.html}">-->
         <button>Cancel</button>

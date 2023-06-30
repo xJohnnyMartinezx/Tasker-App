@@ -2,12 +2,11 @@ package com.codeup.tasker.controllers;
 
 import com.codeup.tasker.models.User;
 import com.codeup.tasker.repos.UserRepo;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 public class UsersController {
@@ -32,6 +31,57 @@ public class UsersController {
         user.setPassword(hashedPassword);
         userRepo.save(user);
         return "/login";
+    }
+
+//    ******* VIEW PROFILE PAGE ***********
+    @GetMapping("/profile/{id}")
+    public String viewProfile(@PathVariable Long id, Model model){
+        User loggedInUser = userRepo.findById(id).get();
+        model.addAttribute("viewProfile", loggedInUser);
+        return "/users/profile";
+    }
+
+//    ******* EDIT PROFILE MAPPINGS *********
+    @GetMapping("/profile/{id}/edit")
+    public String profileEdit(@PathVariable Long id, Model model){
+        User user = userRepo.findById(id).get();
+        model.addAttribute("fullName", user.getFullName());
+        model.addAttribute("username", user.getUsername());
+        model.addAttribute("email", user.getEmail());
+        model.addAttribute("userId", user.getId());
+        return "/users/profile-edit";
+    }
+
+    @PostMapping("/profile/{id}/edit")
+    public String profileEditSubmit(@PathVariable Long id, @RequestParam String fullName, @RequestParam String username, @RequestParam String email ){
+        User loggedInUser = userRepo.findById(id).get();
+        loggedInUser.setId(id);
+        loggedInUser.setFullName(fullName);
+        loggedInUser.setUsername(username);
+        loggedInUser.setEmail(email);
+        userRepo.save(loggedInUser);
+        return "redirect:/profile/{id}";
+    }
+
+//    ****** EDIT USER PASSWORD MAPPINGS ********
+
+    @GetMapping("/profile/{id}/pwEdit")
+    public String editPwForm(@PathVariable Long id, Model model){
+        User userPw =  userRepo.findById(id).get();
+        model.addAttribute("editPassword", userPw.getPassword());
+        model.addAttribute("userId", userPw.getId());
+        return "users/edit-pw-form";
+    }
+
+    @PostMapping("/profile/{id}/pwEdit")
+    public String editPwSubmit(@PathVariable Long id, @RequestParam String password){
+        User loggedInUser = userRepo.findById(id).get();
+        String hashedPassword = passwordEncoder.encode(password);
+        loggedInUser.setId(id);
+        loggedInUser.setPassword(hashedPassword);
+
+        userRepo.save(loggedInUser);
+        return "redirect:/profile/{id}";
     }
 
 

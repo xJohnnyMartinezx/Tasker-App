@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+    <head>
+    <meta charset="UTF-8">
+    <title>Tasks Index</title>
+    <th:block th:insert="~{partials/nav.html :: bootstrap-cdn-link}"></th:block>
+
+</head>
+    <body>
+<th:block th:replace="~{partials/nav.html :: bs-navbar}"></th:block>
+
+<form th:action="@{'/profile/' + ${userId} + '/edit'}" th:method="POST">
+
+
+    <label for="taskTitle">Full Name</label>
+    <input id="taskTitle" type="text" name="fullName" th:text="${fullName}">
+    <br/>
+    <label for="taskDescription">Username</label>
+    <input id="taskDescription" type="text" name="username" th:text="${username}">
+        </input>
+    <label for="email">email</label>
+    <input id="email" type="text" name="email" th:text="${email}">
+    <button type="submit">Submit Edits</button>
+    <!--        <a th:href="@{posts/show.html}">-->
+    <button>Cancel</button>
+    <!--        </a>-->
+</form>
+
+<th:block th:insert="~{partials/nav.html :: bootstrap-script}"></th:block>
+</body>
+</html>

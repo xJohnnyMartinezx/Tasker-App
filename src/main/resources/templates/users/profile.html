@@ -12,6 +12,14 @@
 
     <h1>This is the profile page</h1>
 
+    <th:block th:action="@{'/profile/' + ${viewProfile.getId()}}" th:method="get" th:object="${viewProfile}">
+
+    <h3 th:text="${viewProfile.fullName}"></h3>
+        <h3 th:text="${viewProfile.username}"></h3>
+        <h3 th:text="${viewProfile.email}"></h3>
+
+    </th:block>
+
     <th:block th:insert="~{partials/nav.html :: bootstrap-script}"></th:block>
     </body>
 </html>
