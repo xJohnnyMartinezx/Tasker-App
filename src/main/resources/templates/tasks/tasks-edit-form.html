@@ -14,7 +14,7 @@
     <form th:action="@{'/tasks/' + ${editTask.getId()} + '/edit'}" th:method="POST" th:object="${editTask}">
 
 
-        <label for="taskTitle">Tile:</label>
+        <label for="taskTitle">Title:</label>
         <input id="taskTitle" th:field="*{taskTitle}">
         <br/>
         <label for="taskDescription">Description</label>

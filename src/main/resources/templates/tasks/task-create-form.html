@@ -12,7 +12,7 @@
 
 
     <form th:action="@{/tasks/create}" th:method="post" th:object="${task}">
-        <label for="taskTitle">Tile:</label>
+        <label for="taskTitle">Title:</label>
         <input id="taskTitle" th:field="*{taskTitle}">
         <br/>
         <label for="taskDescription">Description</label>
