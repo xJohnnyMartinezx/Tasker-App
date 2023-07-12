@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
@@ -19,8 +21,10 @@ import java.util.List;
 @Setter
 @Entity
 @Table(name = "organizations")
+@DynamicUpdate
+@DynamicInsert
 @EntityListeners(AuditingEntityListener.class)
-public class Organization {
+public class Organization extends AuditableBase {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,18 +35,6 @@ public class Organization {
 
     @Column(columnDefinition = "TEXT", nullable = false)
     private String organizationDescription;
-
-    @CreatedBy
-    private String organizationCreatedBy;
-
-    @CreatedDate
-    private Instant organizationCreatedDate;
-
-    @LastModifiedBy
-    private String lastModifiedBy;
-
-    @LastModifiedDate
-    private Instant lastModifiedDate;
 
     @ManyToMany(mappedBy = "organizations")
     private List<User> users;

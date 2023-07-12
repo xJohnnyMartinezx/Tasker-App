@@ -47,6 +47,7 @@ public class TaskController {
 
     @PostMapping("/tasks/create")
     public String createTaskSubmit(@ModelAttribute Task task){
+//        User loggedInUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User loggedInUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         task.setUser(loggedInUser);
         taskDao.save(task);
