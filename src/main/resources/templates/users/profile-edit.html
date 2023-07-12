@@ -9,23 +9,40 @@
     <body>
 <th:block th:replace="~{partials/nav.html :: bs-navbar}"></th:block>
 
-<form th:action="@{'/profile/' + ${userId} + '/edit'}" th:method="POST">
+<form name="profile-edit-form" onsubmit="return validateForm()" th:action="@{'/profile/' + ${userId} + '/edit'}" th:method="POST">
 
 
-    <label for="taskTitle">Full Name</label>
-    <input id="taskTitle" type="text" name="fullName" th:text="${fullName}">
+    <label for="fullName">Full Name</label>
+    <input id="fullName" type="text" name="fullName" th:value="${fullName}">
     <br/>
-    <label for="taskDescription">Username</label>
-    <input id="taskDescription" type="text" name="username" th:text="${username}">
+    <label for="username">Username</label>
+    <input id="username" type="text" name="username" th:value="${username}">
         </input>
     <label for="email">email</label>
-    <input id="email" type="text" name="email" th:text="${email}">
+    <input id="email" type="text" name="email" th:value="${email}">
     <button type="submit">Submit Edits</button>
-    <!--        <a th:href="@{posts/show.html}">-->
-    <button>Cancel</button>
-    <!--        </a>-->
+
 </form>
 
+<form th:action="@{'/profile/' + ${userId}}" th:method="get">
+<button>Cancel</button>
+</form>
+
+
+
+
+<script>
+<!--    JS FORM VALIDATION (BEFORE POST REQ SUBMIT)-->
+function validateForm() {
+    let x = document.forms["profile-edit-form"]["fullName"].value;
+    let y = document.forms["profile-edit-form"]["username"].value;
+    let z = document.forms["profile-edit-form"]["email"].value;
+    if (x === "" || y === "" || z === "") {
+        alert("Error! One or more fields are empty!");
+        return false;
+    }
+}
+</script>
 <th:block th:insert="~{partials/nav.html :: bootstrap-script}"></th:block>
 </body>
 </html>
