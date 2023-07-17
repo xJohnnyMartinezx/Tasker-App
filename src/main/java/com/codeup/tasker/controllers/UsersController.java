@@ -34,10 +34,20 @@ public class UsersController {
     }
 
 //    ******* VIEW PROFILE PAGE ***********
+//    @GetMapping("/profile")
+//    public String viewProfileLink(Model model){
+//        User loggedInUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+//        User user = userRepo.findById(loggedInUser.getId()).get();
+//        System.out.println(user.getFullName());
+//        model.addAttribute("viewProfile", loggedInUser);
+//        return "/users/profile";
+//    }
+
     @GetMapping("/profile/{id}")
-    public String viewProfile(@PathVariable Long id, Model model){
-        User loggedInUser = userRepo.findById(id).get();
-        model.addAttribute("viewProfile", loggedInUser);
+    public String viewProfile(Model model, @PathVariable Long id){
+//        User loggedInUser = userRepo.findById(id).get();
+//        System.out.println(loggedInUser.getFullName());
+        model.addAttribute("viewProfile", userRepo.findById(id).get());
         return "/users/profile";
     }
 

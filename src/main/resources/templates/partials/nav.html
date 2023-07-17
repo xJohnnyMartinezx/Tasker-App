@@ -30,6 +30,9 @@
                         <a class="nav-link" th:href="@{/register}">Register</a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link" th:href="@{/profile/{id}}">Profile</a>
+                    </li>
+                    <li class="nav-item">
 <!--                        ***** LOGOUT BTN INSIDE OF FORM IN ORDER TO SUBMIT A "POST" REQUEST *****-->
                         <form th:action="@{/logout}" th:method="post">
                             <button class="btn-link btn" style="margin-top: 8px">Logout</button>
