@@ -24,6 +24,10 @@
 
 </form>
 
+<a th:href="@{'/profile/' + ${userId} + '/pwEdit'}" th:object="${userId}" th:method="GET">
+    <button>Edit My Password</button>
+</a>
+
 <form th:action="@{'/profile/' + ${userId}}" th:method="get">
 <button>Cancel</button>
 </form>

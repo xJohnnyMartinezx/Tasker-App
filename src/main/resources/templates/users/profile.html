@@ -19,15 +19,9 @@
         <h3 th:text="${viewProfile.email}"></h3>
 
 <!--    </th:block>-->
-
-<!--    <div sec:authorize="isAuthenticated()">-->
-<!--        <div th:text="${#authentication.principal.id==viewProfile.id}">-->
-
-<!--        <h3 th:text="${viewProfile.fullName}"></h3>-->
-<!--        Username: <span th:text="${viewProfile.username}"/>-->
-<!--        Email: <span th:text="${viewProfile.email}"/>-->
-<!--        </div>-->
-<!--    </div>-->
+    <a th:href="@{'/profile/' + ${viewProfile.getId()} + '/edit'}" th:object="${viewProfile}">
+        <button>Edit My Profile</button>
+    </a>
 
     <th:block th:insert="~{partials/nav.html :: bootstrap-script}"></th:block>
     </body>

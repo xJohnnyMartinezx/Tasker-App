@@ -6,7 +6,9 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 public class UsersController {
@@ -49,12 +51,14 @@ public class UsersController {
 //        System.out.println(loggedInUser.getFullName());
         model.addAttribute("viewProfile", userRepo.findById(id).get());
         return "/users/profile";
+//        return "/partials/nav";
     }
 
 //    ******* EDIT PROFILE MAPPINGS *********
     @GetMapping("/profile/{id}/edit")
     public String profileEdit(@PathVariable Long id, Model model){
         User user = userRepo.findById(id).get();
+//        model.addAttribute("profileEditBtn", user);
         model.addAttribute("fullName", user.getFullName());
         model.addAttribute("username", user.getUsername());
         model.addAttribute("email", user.getEmail());
@@ -78,20 +82,45 @@ public class UsersController {
     @GetMapping("/profile/{id}/pwEdit")
     public String editPwForm(@PathVariable Long id, Model model){
         User userPw =  userRepo.findById(id).get();
-        model.addAttribute("editPassword", userPw.getPassword());
-        model.addAttribute("userId", userPw.getId());
+        model.addAttribute("currentPw", userPw.getPassword());
+        model.addAttribute("userIdForPw", userPw.getId());
+//        String pwCheck = passwordEncoder.matches(userPw, userPw.getPassword());
         return "users/edit-pw-form";
     }
 
-    @PostMapping("/profile/{id}/pwEdit")
-    public String editPwSubmit(@PathVariable Long id, @RequestParam String password){
-        User loggedInUser = userRepo.findById(id).get();
-        String hashedPassword = passwordEncoder.encode(password);
-        loggedInUser.setId(id);
-        loggedInUser.setPassword(hashedPassword);
+//    @PostMapping("/profile/{id}/pwEdit")
+//    public String editPwSubmit(@PathVariable Long id, @RequestParam String password){
+//        User loggedInUser = userRepo.findById(id).get();
+//        String pwCheck = passwordEncoder.matches(, loggedInUser.getPassword());
+//        String hashedPassword = passwordEncoder.encode(password);
+//        loggedInUser.setId(id);
+//        loggedInUser.setPassword(hashedPassword);
+//
+//        userRepo.save(loggedInUser);
+//        return "redirect:/profile/{id}";
+//    }
 
-        userRepo.save(loggedInUser);
-        return "redirect:/profile/{id}";
+    @PostMapping("/profile/{id}/pwEdit")
+    public String editPwSubmit(@PathVariable Long id, @RequestParam String currentPw, @RequestParam String newPassword){
+//    public String editPwSubmit(@PathVariable Long id, @RequestParam String currentPassword, @RequestParam String newPassword, @ModelAttribute User user, Model model){
+        User loggedInUser = userRepo.findById(id).get();
+//        model.addAttribute("currentPw", loggedInUser.getPassword());
+        boolean pwCheck = passwordEncoder.matches(currentPw, loggedInUser.getPassword());
+
+        if (pwCheck){
+            System.out.println("Current PW Matches: " + currentPw);
+            String hashedPassword = passwordEncoder.encode(newPassword);
+            loggedInUser.setId(id);
+            loggedInUser.setPassword(hashedPassword);
+            userRepo.save(loggedInUser);
+
+            return "redirect:/profile/{id}";
+        }else {
+            System.out.println("No Match");
+
+            return "redirect:/profile/{id}/pwEdit";
+        }
+
     }
 
 
