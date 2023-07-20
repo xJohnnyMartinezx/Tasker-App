@@ -17,7 +17,7 @@
     <br/>
     <label for="username">Username</label>
     <input id="username" type="text" name="username" th:value="${username}">
-        </input>
+    </input>
     <label for="email">email</label>
     <input id="email" type="text" name="email" th:value="${email}">
     <button type="submit">Submit Edits</button>
@@ -29,10 +29,8 @@
 </a>
 
 <form th:action="@{'/profile/' + ${userId}}" th:method="get">
-<button>Cancel</button>
+    <button>Cancel</button>
 </form>
-
-
 
 
 <script>

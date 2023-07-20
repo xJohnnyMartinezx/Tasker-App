@@ -1,20 +1,12 @@
 package com.codeup.tasker.models;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.AssertTrue;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.executable.ValidateOnExecution;
 import lombok.*;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
-import org.hibernate.annotations.NotFound;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-import org.springframework.validation.annotation.Validated;
-
 import java.util.Calendar;
 import java.util.List;
 
@@ -81,4 +73,5 @@ public class User{
         this.email = copy.email;
         this.password = copy.password;
     }
+
 }

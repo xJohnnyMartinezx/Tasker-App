@@ -1,41 +1,57 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-    <head>
+<head>
     <meta charset="UTF-8">
     <title>Tasks Index</title>
     <th:block th:insert="~{partials/nav.html :: bootstrap-cdn-link}"></th:block>
 
 </head>
-    <body>
+<body>
 <th:block th:replace="~{partials/nav.html :: bs-navbar}"></th:block>
 
-<div th:if="${session.message}" class="container">
-    <div th:classappend="${'alert-' + session.message.type}" class="alert text-center" role="alert">
-        <span th:text="${session.message.content}"></span>
+<div th:if="${session.pWEditMessage}" class="container">
+    <div th:classappend="${'alert-' + session.pWEditMessage.type}" class="alert text-center" role="alert">
+        <span th:text="${session.pWEditMessage.content}"></span>
     </div>
 </div>
 
 
-<form th:action="@{'/profile/' + ${userIdForPw} + '/pwEdit'}" th:method="POST">
-
-
+<form name="password-edit-form" onsubmit="return validateForm()" th:action="@{'/profile/' + ${userIdForPw} + '/pwEdit'}" th:method="POST">
 
     <label for="currentPw">Enter your Current Password</label>
-        <input id="currentPw" type="text" name="currentPw">
-
+    <input id="currentPw" type="text" name="currentPw">
     <br/>
     <label for="password">New Password</label>
     <input id="password" type="text" name="newPassword">
+    <br/>
+    <label for="ConfirmPassword">New Password</label>
+    <input id="ConfirmPassword" type="text" name="ConfirmPassword">
 
     <br/>
     <button type="submit">Submit Edits</button>
     <br/>
 
 </form>
-<a th:href="@{'/profile/' + ${userIdForPw}}" th:object="${userIdForPw}" >
+
+<a th:href="@{'/profile/' + ${userIdForPw}}" th:object="${userIdForPw}">
     <button>Cancel</button>
 </a>
 
+
+<script>
+    <!--    JS FORM VALIDATION (BEFORE POST REQ SUBMIT)-->
+    function validateForm() {
+        let newPw = document.forms["password-edit-form"]["newPassword"].value;
+        let newPwConfirm = document.forms["password-edit-form"]["ConfirmPassword"].value;
+        if (newPw === "" || newPwConfirm === "") {
+            alert("Error! One or more fields are empty!");
+            return false;
+        } else if (newPw !== newPwConfirm){
+            alert("Error! New passwords do not match!");
+            return false;
+        }
+    }
+</script>
 
 <th:block th:insert="~{partials/nav.html :: bootstrap-script}"></th:block>
 </body>

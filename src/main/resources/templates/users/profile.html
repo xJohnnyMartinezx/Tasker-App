@@ -12,6 +12,12 @@
 
     <h1>This is the profile page</h1>
 
+    <div th:if="${session.UserEditMessage}" class="container">
+        <div th:classappend="${'alert-' + session.UserEditMessage.type}" class="alert text-center" role="alert">
+            <span th:text="${session.UserEditMessage.content}"></span>
+        </div>
+    </div>
+
 <!--    <th:block th:action="@{'/profile/' + ${viewProfile.getId()}}" th:method="get" th:object="${viewProfile}">-->
 
     <h3 th:text="${viewProfile.fullName}"></h3>
