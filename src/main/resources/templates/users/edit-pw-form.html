@@ -29,10 +29,12 @@
 
     <br/>
     <button type="submit">Submit Edits</button>
-    <!--        <a th:href="@{posts/show.html}">-->
-    <button>Cancel</button>
-    <!--        </a>-->
+    <br/>
+
 </form>
+<a th:href="@{'/profile/' + ${userIdForPw}}" th:object="${userIdForPw}" >
+    <button>Cancel</button>
+</a>
 
 
 <th:block th:insert="~{partials/nav.html :: bootstrap-script}"></th:block>
