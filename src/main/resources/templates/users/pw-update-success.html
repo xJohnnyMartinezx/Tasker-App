@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+  <meta charset="UTF-8">
+  <title>Tasks Index</title>
+  <th:block th:insert="~{partials/nav.html :: bootstrap-cdn-link}"></th:block>
+
+</head>
+<body>
+<th:block th:replace="~{partials/nav.html :: bs-navbar}"></th:block>
+
+<div th:if="${session.message}" class="container">
+  <div th:classappend="${'alert-' + session.message.type}" class="alert text-center" role="alert">
+    <span th:text="${session.message.content}"></span>
+  </div>
+</div>
+
+<h1>Click Ok to Continue.</h1>
+
+
+
+
+  <br/>
+  <a th:href="@{'/profile/' + ${userId}}" th:object="${userId}" >
+    <button>OK</button>
+  </a>
+  <!--        <a th:href="@{posts/show.html}">-->
+  <button>Cancel</button>
+  <!--        </a>-->
+
+
+
+<th:block th:insert="~{partials/nav.html :: bootstrap-script}"></th:block>
+</body>
+</html>

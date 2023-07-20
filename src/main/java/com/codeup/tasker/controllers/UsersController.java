@@ -1,14 +1,15 @@
 package com.codeup.tasker.controllers;
 
+import com.codeup.tasker.helper.Message;
 import com.codeup.tasker.models.User;
 import com.codeup.tasker.repos.UserRepo;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.thymeleaf.expression.Messages;
 
 @Controller
 public class UsersController {
@@ -89,39 +90,84 @@ public class UsersController {
     }
 
 //    @PostMapping("/profile/{id}/pwEdit")
-//    public String editPwSubmit(@PathVariable Long id, @RequestParam String password){
+//    public String editPwSubmit(@PathVariable Long id, @RequestParam String currentPw, @RequestParam String newPassword){
 //        User loggedInUser = userRepo.findById(id).get();
-//        String pwCheck = passwordEncoder.matches(, loggedInUser.getPassword());
-//        String hashedPassword = passwordEncoder.encode(password);
-//        loggedInUser.setId(id);
-//        loggedInUser.setPassword(hashedPassword);
+//        boolean pwCheck = passwordEncoder.matches(currentPw, loggedInUser.getPassword());
+//        try {
 //
-//        userRepo.save(loggedInUser);
-//        return "redirect:/profile/{id}";
+//            if (pwCheck) {
+//                System.out.println("Current PW Matches: " + currentPw);
+//                String hashedPassword = passwordEncoder.encode(newPassword);
+//                loggedInUser.setId(id);
+//                loggedInUser.setPassword(hashedPassword);
+//                userRepo.save(loggedInUser);
+//
+//                return "redirect:/profile/{id}";
+//            } else {
+//                System.out.println("No Match");
+//                return "redirect:/profile/{id}/pwEdit";
+//            }
+//        }catch (Exception e){
+//            e.printStackTrace();
+//        }
+//        return "redirect:/profile/{id}/pwEdit";
 //    }
 
     @PostMapping("/profile/{id}/pwEdit")
-    public String editPwSubmit(@PathVariable Long id, @RequestParam String currentPw, @RequestParam String newPassword){
-//    public String editPwSubmit(@PathVariable Long id, @RequestParam String currentPassword, @RequestParam String newPassword, @ModelAttribute User user, Model model){
+    public String editPwSubmit(@PathVariable Long id, @RequestParam String currentPw, @RequestParam String newPassword, HttpSession session){
         User loggedInUser = userRepo.findById(id).get();
-//        model.addAttribute("currentPw", loggedInUser.getPassword());
         boolean pwCheck = passwordEncoder.matches(currentPw, loggedInUser.getPassword());
+        try {
 
-        if (pwCheck){
-            System.out.println("Current PW Matches: " + currentPw);
-            String hashedPassword = passwordEncoder.encode(newPassword);
-            loggedInUser.setId(id);
-            loggedInUser.setPassword(hashedPassword);
-            userRepo.save(loggedInUser);
+            if (pwCheck) {
+                System.out.println("Current PW Matches: " + currentPw);
+                String hashedPassword = passwordEncoder.encode(newPassword);
+                loggedInUser.setId(id);
+                loggedInUser.setPassword(hashedPassword);
+                userRepo.save(loggedInUser);
+                session.setAttribute("message", new Message("Your password has been successfully updated!", "success"));
 
-            return "redirect:/profile/{id}";
-        }else {
-            System.out.println("No Match");
-
-            return "redirect:/profile/{id}/pwEdit";
+                return "redirect:/pwSuccess/{id}";
+            } else {
+                System.out.println("No Match");
+                session.setAttribute("message", new Message("Your old password doesn't match!", "danger"));
+                return "redirect:/profile/{id}/pwEdit";
+            }
+        }catch (Exception e){
+            e.printStackTrace();
         }
-
+        return "redirect:/profile/{id}/pwEdit";
     }
+
+    @GetMapping("/pwSuccess/{id}")
+    public String successfulPwUpdate(@PathVariable Long id, Model model){
+        User loggedInUser = userRepo.findById(id).get();
+    model.addAttribute("userId", loggedInUser.getId());
+        return "users/pw-update-success";
+    }
+
+//    @PostMapping("/profile/{id}/pwEdit")
+//    public String editPwSubmit(@PathVariable Long id, @RequestParam String currentPw, @RequestParam String newPassword, @Valid @ModelAttribute User user, BindingResult bindingResult, Model model){
+//        User loggedInUser = userRepo.findById(id).get();
+//        boolean pwCheck = passwordEncoder.matches(currentPw, loggedInUser.getPassword());
+//
+//        if (pwCheck){
+//            System.out.println("Current PW Matches: " + currentPw);
+//            String hashedPassword = passwordEncoder.encode(newPassword);
+//            loggedInUser.setId(id);
+//            loggedInUser.setPassword(hashedPassword);
+//            userRepo.save(loggedInUser);
+//
+//            return "redirect:/profile/{id}";
+//        }else {
+//            if (bindingResult.hasErrors()) {
+//                System.out.println("No Match");
+//                model.addAttribute("message", "Registration unsuccessful, old password doesn't match ");
+//            }
+//            return "redirect:/profile/{id}/pwEdit";
+//        }
+//
+//    }
 
 
 }

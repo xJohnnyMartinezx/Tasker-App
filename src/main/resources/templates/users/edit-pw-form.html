@@ -9,18 +9,20 @@
     <body>
 <th:block th:replace="~{partials/nav.html :: bs-navbar}"></th:block>
 
+<div th:if="${session.message}" class="container">
+    <div th:classappend="${'alert-' + session.message.type}" class="alert text-center" role="alert">
+        <span th:text="${session.message.content}"></span>
+    </div>
+</div>
 
 
 <form th:action="@{'/profile/' + ${userIdForPw} + '/pwEdit'}" th:method="POST">
 
 
+
     <label for="currentPw">Enter your Current Password</label>
-    <input id="currentPw" type="text" name="currentPw">
-    <div th:if="${currentPw} != ${currentPw}" >
+        <input id="currentPw" type="text" name="currentPw">
 
-        <span  >Wrong credentials </span>
-
-    </div>
     <br/>
     <label for="password">New Password</label>
     <input id="password" type="text" name="newPassword">

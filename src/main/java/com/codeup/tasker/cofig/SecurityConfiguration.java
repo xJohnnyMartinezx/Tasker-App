@@ -39,7 +39,7 @@ public class SecurityConfiguration {
         http.authorizeHttpRequests((requests) -> requests
                         /* Pages that require authentication
                          * only authenticated users can create and edit ads */
-                        .requestMatchers( "/task/create", "/tasks/{id}/edit", "/profile/{id}/edit", "/profile/{id}/pwEdit", "/profile", "/profile/{id}").authenticated()
+                        .requestMatchers( "/task/create", "/tasks/{id}/edit", "/profile/{id}/edit", "/profile/{id}/pwEdit", "/profile", "/profile/{id}", "/pwSuccess/{id}").authenticated()
                         /* Pages that do not require authentication
                          * anyone can visit the home page, register, login, and view ads */
                         .requestMatchers("/", "/register", "/login", "/tasks", "/tasks/{id}").permitAll()
