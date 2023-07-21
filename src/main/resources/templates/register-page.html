@@ -13,22 +13,149 @@
     <h1>This is the registration page!</h1>
 
 
-    <form th:action="@{/register}" th:method="post" th:object="${register}">
-        Full Name:
-        <input th:field="*{fullName}" />
-        <br />
-        Username:
-        <input th:field="*{username}"/>
-        <br />
-        Email:
-        <input th:field="*{email}" />
-        <br />
-        Password:
-        <input th:field="*{password}"/>
-        <br />
-        <input type="submit" />
-    </form>
+<!--    <form th:action="@{/register}" th:method="post" th:object="${register}">-->
+<!--        Full Name:-->
+<!--        <input th:field="*{fullName}" />-->
+<!--        <br />-->
+<!--        Username:-->
+<!--        <input th:field="*{username}"/>-->
+<!--        <br />-->
+<!--        Email:-->
+<!--        <input th:field="*{email}" />-->
+<!--        <br />-->
+<!--        Password:-->
+<!--        <input th:field="*{password}"/>-->
+<!--        <br />-->
+<!--        <input type="submit" />-->
+<!--    </form>-->
 
-    <th:block th:insert="~{partials/nav.html :: bootstrap-script}"></th:block>
+
+
+    <div class="container-fluid">
+        <form th:action="@{/register}" th:method="post" th:object="${register}" class="g-3 needs-validation" novalidate>
+            <div class="col-md-4">
+                <label for="validationCustom01" class="form-label">Full Name</label>
+                <input type="text" class="form-control" id="validationCustom01" th:field="*{fullName}" required>
+                <div class="invalid-feedback">
+                    Please enter a name.
+                </div>
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
+            </div>
+            <br/>
+            <div class="col-md-4">
+                <label for="validationCustom02" class="form-label">Username</label>
+                <input type="text" class="form-control" id="validationCustom02" th:field="*{username}" required>
+                <div class="invalid-feedback">
+                    Please a valid username.
+                </div>
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
+            </div>
+            <br/>
+            <div class="col-md-4">
+                <label for="validationCustomEmail" class="form-label">Email</label>
+                <div class="input-group has-validation">
+                    <span class="input-group-text" id="inputGroupPrepend">@</span>
+                    <input type="email" class="form-control" id="validationCustomEmail" aria-describedby="inputGroupPrepend" th:field="*{email}" required>
+                    <div class="invalid-feedback">
+                        Please a valid email address.
+                    </div>
+                    <div class="valid-feedback">
+                        Looks good!
+                    </div>
+                </div>
+            </div>
+            <br/>
+            <div class="col-md-4">
+                <label for="password" class="form-label">Password</label>
+                <input type="text" class="form-control" id="password" th:field="*{password}" required>
+                <div class="invalid-feedback">
+                    Please enter a password.
+                </div>
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
+            </div>
+            <br/>
+            <div class="col-md-4">
+                <label for="confirmPw" class="form-label">Confirm Password</label>
+                <div class="input-group has-validation">
+                    <input type="text" class="form-control" id="confirmPw" aria-describedby="inputGroupPrepend" name="ConfirmPassword" required>
+                    <div class="invalid-feedback">
+                        Passwords do not match!
+                    </div>
+                    <div class="valid-feedback">
+                        Passwords Match!
+                    </div>
+                </div>
+            </div>
+            <br/>
+            <div class="col-12">
+                <button class="btn btn-primary new-pw-btn" type="submit" id="regSubBtn" disabled>Register!</button>
+            </div>
+        </form>
+    </div>
+
+
+    <script>
+        <!--    JS FORM VALIDATION (BEFORE POST REQ SUBMIT)-->
+        (() => {
+            'use strict'
+
+            // Fetch all the forms we want to apply custom Bootstrap validation styles to
+            const forms = document.querySelectorAll('.needs-validation')
+
+            // Loop over them and prevent submission
+            Array.from(forms).forEach(form => {
+                form.addEventListener('submit', event => {
+                    //PREVENTING THE FORM FROM SUBMITTING IF BOOTSTRAP VALIDITY CHECK EQUALS FALSE;
+                    if (!form.checkValidity()) {
+                        event.preventDefault()
+                        event.stopPropagation()
+                    }
+                    form.classList.add('was-validated')
+                }, false)
+            })
+        })()
+
+        // GETTING VALUES OF PW AND CONFIRM PW FIELDS;
+        let password = document.getElementById('password');
+        let confirmPw = document.getElementById('confirmPw');
+        // TARGETING THE SUBMIT BTN, CURRENTLY DISABLED UNTIL PW AND CONFIRM PW MATCH;
+        let regSubBtn = document.getElementById('regSubBtn');
+        confirmPw.oninput = () => {
+            // CHECKING IF PW AND CONFIRM PW MATCH;
+            if(confirmPw.value !== password.value){
+                // IF THEY DONT MATCH, THEN ADD BOOTSTRAP "is-invalid" CLASS AND REMOVE "is-valid",
+                // THESE CLASSES WILL DISPLAY THE MSG IN DIVS WITH CLASS NAMES OF "invalid-feedback", "valid-feedback";
+                confirmPw.classList.add('is-invalid');
+                confirmPw.classList.remove('is-valid');
+                regSubBtn.disabled = true;
+            } else {
+                confirmPw.classList.remove('is-invalid');
+                confirmPw.classList.add("is-valid");
+                regSubBtn.disabled = false;
+            }
+        }
+
+        let email = document.getElementById('validationCustomEmail');
+        email.oninput = () => {
+            const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+            if(!re.test(email.value)){
+                email.setCustomValidity("Invalid field.");
+                email.classList.add('is-invalid');
+            } else {
+                email.classList.remove('is-invalid');
+                email.setCustomValidity("")
+            }
+        }
+
+    </script>
+
+        <th:block th:insert="~{partials/nav.html :: bootstrap-script}"></th:block>
+
     </body>
 </html>

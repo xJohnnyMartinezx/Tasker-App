@@ -66,7 +66,7 @@
             <div class="input-group has-validation">
                 <input type="text" class="form-control" id="confirmNewPw" aria-describedby="inputGroupPrepend" name="ConfirmPassword" required>
                 <div class="invalid-feedback">
-                    Please confirm your new password.
+                    New passwords do not match!
                 </div>
                 <div class="valid-feedback">
                     Passwords Match!
@@ -87,19 +87,6 @@
 
 <script>
     <!--    JS FORM VALIDATION (BEFORE POST REQ SUBMIT)-->
-    // function validateForm() {
-    //     let newPw = document.forms["password-edit-form"]["newPassword"].value;
-    //     let newPwConfirm = document.forms["password-edit-form"]["ConfirmPassword"].value;
-    //     if (newPw === "" || newPwConfirm === "") {
-    //         alert("Error! One or more fields are empty!");
-    //         return false;
-    //     } else if (newPw !== newPwConfirm){
-    //         alert("Error! New passwords do not match!");
-    //         return false;
-    //     }
-    // }
-
-
     (() => {
         'use strict'
 
@@ -109,23 +96,28 @@
         // Loop over them and prevent submission
         Array.from(forms).forEach(form => {
             form.addEventListener('submit', event => {
+                //PREVENTING THE FORM FROM SUBMITTING IF BOOTSTRAP VALIDITY CHECK EQUALS FALSE;
                 if (!form.checkValidity()) {
                     event.preventDefault()
                     event.stopPropagation()
                 }
-
                 form.classList.add('was-validated')
             }, false)
         })
     })()
-
+    // GETTING VALUES OF NEW PW AND CONFIRM NEW PW FIELDS;
     let newPw = document.getElementById('newPw');
     let confirmNewPw = document.getElementById('confirmNewPw');
+    // TARGETING THE SUBMIT BTN, CURRENTLY DISABLED UNTIL NEW PW AND CONFIRM PW MATCH;
     let pwSubBtn = document.getElementById('pwSubBtn');
     confirmNewPw.oninput = () => {
+        // CHECKING IF NEW PW AND CONFIRM PW MATCH;
         if(confirmNewPw.value !== newPw.value || confirmNewPw.value === ""){
+            // IF THEY DONT MATCH, THEN ADD BOOTSTRAP "is-invalid" CLASS AND REMOVE "is-valid",
+            // THESE CLASSES WILL DISPLAY THE MSG IN DIVS WITH CLASS NAMES OF "invalid-feedback", "valid-feedback";
             confirmNewPw.classList.add('is-invalid');
             confirmNewPw.classList.remove('is-valid');
+            regSubBtn.disabled = true;
         } else {
             confirmNewPw.classList.remove('is-invalid');
             confirmNewPw.classList.add("is-valid");
