@@ -47,7 +47,8 @@ public class SecurityConfiguration {
                         .requestMatchers("/css/**", "/js/**", "/img/**").permitAll()
                 )
                 /* Login configuration */
-                .formLogin((login) -> login.loginPage("/login").defaultSuccessUrl("/tasks"))
+//                                                        ******* vv ALLOWS USERS TO LOG IN VIA EMAIL ********
+                .formLogin((login) -> login.loginPage("/login").usernameParameter("email").defaultSuccessUrl("/tasks"))
                 /* Logout configuration */
                 .logout((logout) -> logout.logoutSuccessUrl("/login?logout")).httpBasic(withDefaults());
         return http.build();

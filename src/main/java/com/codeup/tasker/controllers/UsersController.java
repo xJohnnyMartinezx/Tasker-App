@@ -107,7 +107,7 @@ public class UsersController {
                 boolean pwCheck = passwordEncoder.matches(currentPw, loggedInUser.getPassword());
                 //IF CURRENT PW (OLD PW) MATCHES, THEN CONTINUE WITH NEW PW UPDATE PROCESS, ELSE THROW EXCEPTION;
                 if (pwCheck) {
-                    System.out.println("Current PW Matches: " + currentPw);
+                    System.out.println("Current PW Matches: Password update Successful!");
                     //HASHING NEW PW
                     String hashedPassword = passwordEncoder.encode(newPassword);
                     //SETTING THE CURRENT USER ID...TO RETAIN THE SAME USER ID IN PW UPDATE PROCESS;
@@ -120,6 +120,7 @@ public class UsersController {
                     session.setAttribute("pWEditMessage", new Message("Your password has been successfully updated!", "success"));
                     return "redirect:/updateSuccess/{id}";
                 } else {
+                    System.out.println("Current password doesn't match: Password update failed!");
                     throw new Exception("Your old password doesn't match!");
                 }
             } catch (Exception e) {
